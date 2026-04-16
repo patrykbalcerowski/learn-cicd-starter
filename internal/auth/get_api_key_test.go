@@ -43,30 +43,25 @@ func TestGetAPIKey(t *testing.T) {
 			wantErrText: ErrNoAuthHeaderIncluded.Error(),
 		},
 		{
-			name:        "Poprawny nagłówek z ApiKey",
-			headers:     http.Header{"Authorization": []string{"ApiKey super-tajny-klucz-456"}},
-			wantKey:     "super-tajny-klucz-456",
-			wantErr:     false,
+			name:    "Poprawny nagłówek z ApiKey",
+			headers: http.Header{"Authorization": []string{"ApiKey super-tajny-klucz-456"}},
+			wantKey: "super-tajny-klucz-456",
+			wantErr: false,
 		},
 	}
 
-	// Odpalamy pętlę po wszystkich przypadkach
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			gotKey, err := GetAPIKey(tt.headers)
 
-			// 1. Sprawdzamy czy błąd wystąpił (lub nie) tak jak chcieliśmy
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAPIKey() błąd = %v, oczekiwano błędu: %v", err, tt.wantErr)
-				return // Przerywamy ten konkretny test, bo reszta nie ma sensu
+				return
 			}
-
-			// 2. Jeśli miał być błąd, sprawdzamy czy to TEN KONKRETNY błąd
 			if tt.wantErr && err.Error() != tt.wantErrText {
 				t.Errorf("GetAPIKey() komunikat błędu = '%v', oczekiwano '%v'", err.Error(), tt.wantErrText)
 			}
 
-			// 3. Sprawdzamy, czy wyciągnięty klucz jest poprawny
 			if gotKey != tt.wantKey {
 				t.Errorf("GetAPIKey() zwrócony klucz = %v, oczekiwano %v", gotKey, tt.wantKey)
 			}
