@@ -56,7 +56,7 @@ func TestGetAPIKey(t *testing.T) {
 
 			if (err != nil) != tt.wantErr {
 				t.Errorf("GetAPIKey() błąd = %v, oczekiwano błędu: %v", err, tt.wantErr)
-				return 
+				return
 			}
 			if tt.wantErr && err.Error() != tt.wantErrText {
 				t.Errorf("GetAPIKey() komunikat błędu = '%v', oczekiwano '%v'", err.Error(), tt.wantErrText)
