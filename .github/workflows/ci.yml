@@ -19,6 +19,12 @@ jobs:
 
       - name: Check Go Version
         run: go test -cover ./...
+
+      - name: Install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+      
+      - name: check security
+        run: gosec ./...
   style:
     name: Style
     runs-on: ubuntu-latest
